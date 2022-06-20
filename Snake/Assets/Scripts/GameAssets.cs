@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameAssets : MonoBehaviour
 {
+    // A single script containing all asset references.
+
     public static GameAssets instance;
 
     private void Awake()
