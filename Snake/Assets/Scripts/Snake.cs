@@ -9,14 +9,20 @@ public class Snake : MonoBehaviour
     private Vector2Int gridMoveDirection;
     [SerializeField] private float gridMoveTimer;
     [SerializeField] private float gridMoveTimerMax;
+    private LevelGrid levelGrid;
 
+    public void Setup(LevelGrid levelGrid)
+    {
+        this.levelGrid = levelGrid;
+    }
 
     private void Awake()
     {
-        gridPosition = new Vector2Int(0, 0);
-        gridMoveTimerMax = 1f;
+        gridPosition = new Vector2Int(10, 10);
+        gridMoveTimerMax = 0.8f;
         gridMoveTimer = gridMoveTimerMax;
         gridMoveDirection = new Vector2Int(0, 1);
+        GetComponent<SpriteRenderer>().sprite = GameAssets.instance.snakeHeadSprite;
 
     }
     private void Update()
@@ -74,7 +80,9 @@ public class Snake : MonoBehaviour
             gridPosition += gridMoveDirection;
 
             transform.position = new Vector3(gridPosition.x, gridPosition.y);
-            transform.eulerAngles = new Vector3(0, 0, GetAngleFromVector(gridMoveDirection) -90);
+            transform.eulerAngles = new Vector3(0, 0, GetAngleFromVector(gridMoveDirection) - 90);
+
+            levelGrid.SnakeMoved(gridPosition);
         }
     }
 
@@ -85,4 +93,3 @@ public class Snake : MonoBehaviour
         return rotation;
     }
 }
-
